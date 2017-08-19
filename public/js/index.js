@@ -8,13 +8,9 @@ app.component('formDelivery',{
     templateUrl:'templates/form-delivery.template.html',
     controller:['$http','configObj',function($http,configObj) {
         var ctrl=this;
-        var deliveryInicial={
-            cliente:'',
-            peso:'',
-            endereco:'',
-            geocode:null 
-        }
-        // ctrl.delivery=deliveryInicial;
+
+        
+        ctrl.cover1=0;
         ctrl.delivery={
             cliente:'José do Site',
             peso:'109',
@@ -53,6 +49,7 @@ app.component('formDelivery',{
             var peso=ctrl.delivery.peso;
             var endereco=ctrl.delivery.endereco; */
 
+            ctrl.cover1=1;
             $http({
                 method:'POST',
                 url:'/deliveries',
@@ -63,6 +60,7 @@ app.component('formDelivery',{
                     peso
                 } */
             }).then((resp)=>{
+                ctrl.cover1=0;
                 var data=resp.data;
                 if(data.delivs) {
                     var geocode=data.geocode;
@@ -73,12 +71,14 @@ app.component('formDelivery',{
                     configObj.displayError(data.error);
                 }
             }).catch((err)=>{
+                ctrl.cover1=0;
                 return configObj.displayError(err);
             });
         }
 
         ctrl.getGeocode=function() {
             var endereco=ctrl.delivery.endereco;
+            ctrl.cover1=1;
             $http({
                 method:'GET',
                 url:'/geocode',
@@ -86,10 +86,12 @@ app.component('formDelivery',{
                     endereco:endereco
                 }
             }).then(function(ret) {
+                ctrl.cover1=0;
                 var data=ret.data;
                 ctrl.delivery.geocode=data;
                 return latLng(data);
             }).catch(function(err) {
+                ctrl.cover1=0;
                 return configObj.displayError(err);
             });
         }
@@ -104,6 +106,8 @@ app.component('deliveryMap',{
         // pk.eyJ1IjoicmVteXBvbnNvIiwiYSI6ImNqNmlneHRnNjBqYXkycXAwZDhndWRuOXAifQ.yECdzgcXZygQ-0qIKsQORg
         const accessToken='pk.eyJ1IjoicmVteXBvbnNvIiwiYSI6ImNqNmlneHRnNjBqYXkycXAwZDhndWRuOXAifQ.yECdzgcXZygQ-0qIKsQORg';
         const ctrl=this;
+
+        ctrl.cover1=0;
 
         ctrl.mymap=null;
 
@@ -152,11 +156,15 @@ app.component('deliveryMap',{
             var arrayRet=array.map((elem)=>{
                 var lat=elem.endereco.geolocalizacao.latitude;
                 var lng=elem.endereco.geolocalizacao.longitude;
-                // var marker = L.marker([lat,lng]).addTo(map);
-
-                elem.marker=L.marker([lat,lng]).addTo(map);
+                var nome=elem.nome;
+                var peso=elem.peso;
+                var marker=L.marker([lat,lng]).addTo(map);
+                marker.bindPopup(nome+"<br>"+peso+"Kg",{className:'popup1'});
+                elem.marker=marker;
                 return elem;
             });
+
+
             return arrayRet;
         } // setMarkers
 
@@ -174,22 +182,29 @@ app.component('deliveryMap',{
 
         ctrl.getDeliveries=function() {
             var map=ctrl.mymap;
+            ctrl.cover1=1;
             $http({
                 method:'GET',
                 url:'/deliveries'
             }).then((resp)=>{
+                ctrl.cover1=0;
                 const array=resp.data;
                 displayDeliv(array);
+            }).catch(function(err) {
+                ctrl.cover1=0;
+
             });
         }
 
         ctrl.removeDeliv=function(item) {
             var id=item._id;
             var marker=item.marker;
+            ctrl.cover1=1;
             $http({
                 method:'DELETE',
                 url:'/delivery/'+id
             }).then((ret)=>{
+                ctrl.cover1=0;
                 var data=ret.data;
                 if(data.error)
                     return configObj.displayError(data.error);
@@ -200,6 +215,7 @@ app.component('deliveryMap',{
                 });
                 ctrl.delivery.deliveries=fmtArrayDeliveries(ctrl.delivery.deliveries,{delIndex:index});
             }).catch((err)=>{
+                ctrl.cover1=0;
                 configObj.displayError(err);
             });
         }
@@ -257,5 +273,21 @@ app.value('configObj',{
         var num=float.substr(0,index);
         num=num.split('').reverse().join('').replace(/[\d]{#}/g,'$&.').split('').reverse().join('').replace(/^\./,'');
         return num+','+decs2;
+    }
+});
+
+
+app.directive('loading',function() {
+    return {
+        retrict:'E',
+        scope:{
+            cover:'<'
+        },
+        template:function(elem,attrs) {
+            return '<div class="cover1" ng-show="cover"><span class="icon-spin3 animate-spin"></span></div>';
+        },
+        link:function(scope,element) {
+            element.parent().css({position:'relative'});
+        }
     }
 });
