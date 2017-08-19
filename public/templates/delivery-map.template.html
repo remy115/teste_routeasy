@@ -30,6 +30,9 @@
                 <td>{{item.endereco.geolocalizacao.longitude}}</td>
                 <td class="text-center"><button type="button" title="Excluir" class="btn-del1" ng-click="$ctrl.removeDeliv(item)"><span class="icon-minus-circled"></span></button></td>
             </tr>
+            <tr ng-hide="$ctrl.delivery.deliveries.length">
+                <td class="text-center" colspan="8"><h3>Não há registros!</h3></td>
+            </tr>
         </tbody>
     </table>
     </div>

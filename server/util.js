@@ -11,7 +11,7 @@ var getGeoCode = function(address) {
         gMaps.geocode({address}).asPromise().then(function(resp) {
             var results=resp.json.results;
             var status=resp.json.status;
-            console.log('geocode addr: '+address,results);
+            // console.log('geocode addr: '+address,results);
             if(status == 'OK') {
                 return res(results);
             } else if(status == 'ZERO_RESULTS') {
@@ -20,7 +20,7 @@ var getGeoCode = function(address) {
                 console.warn(status);
                 return rej({error:'Erro Indefinido!',status:500});
             }
-            // console.log('resp geocoding',JSON.stringify(resp));
+
         }).catch((err)=>{
             console.warn(err);
             return rej({error:'Erro Indefinido!',status:500});

@@ -16,6 +16,7 @@
         <button type="button" class="btn-delivery btn-cad" ng-click="$ctrl.saveDelivery()">CADASTRAR CLIENTE</button>
     </div>
     <div class="frame1 form-delivery">
-        <button type="button" class="btn-delivery btn-reset" >RESETAR CADASTRO</button>
+        <loading cover="$ctrl.cover1"></loading>
+        <button type="button" class="btn-delivery btn-reset" ng-click="$ctrl.deleteAll()">RESETAR CADASTRO</button>
     </div>
 </div>

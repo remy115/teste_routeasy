@@ -95,6 +95,25 @@ app.component('formDelivery',{
                 return configObj.displayError(err);
             });
         }
+
+        ctrl.deleteAll=function() {
+            ctrl.cover1=1;
+            $http({
+                url:'/deliveries',
+                method:'DELETE'
+            }).then(function(ret) {
+                ctrl.cover1=0;
+                var array=[];
+                configObj.displayDelivs(array);
+                zerarForm();
+
+            }).catch(function(err) {
+                ctrl.cover1=0;
+                return configObj.displayError(err);
+
+            });
+
+        }
         ctrl.$onInit=()=>{}
         
     }]
@@ -115,16 +134,16 @@ app.component('deliveryMap',{
         ctrl.delivery={};
         ctrl.delivery.deliveries=[];
         ctrl.estats={
-            totalCli:333,
-            totalPeso:128,
-            ticketMedio:114.3,
+            totalCli:0,
+            totalPeso:0,
+            ticketMedio:0,
             recalc:function(array) {
                 var totalCli=array.length;
                 var peso=0;
                 array.forEach(function(elem) {
                     peso+=parseInt(elem.peso) || 0;
                 });
-                var ticketMedio=peso/totalCli;
+                var ticketMedio=(peso/totalCli) || 0;
                 this.ticketMedio=configObj.fmtNum(ticketMedio,3);
                 this.totalCli=totalCli;
                 this.totalPeso=configObj.fmtNum(peso,3);
@@ -137,7 +156,8 @@ app.component('deliveryMap',{
 
         function fmtArrayDeliveries(array,params) {
             if(!params) params={};
-            var delIndex=parseInt(params.delIndex) || -1;
+            // var delIndex = params.delIndex || params.delIndex === 0 ? parseInt(params.delIndex) : -1;
+            var delIndex = isNaN(params.delIndex) ? -1 : parseInt(params.delIndex);
             if(delIndex > -1) {
                 array.splice(delIndex,1);
             }
@@ -263,6 +283,13 @@ app.value('configObj',{
     displayDelivs:null, // realiza o display de delivs fornecidas
     displayError:(error)=>{
         console.warn(error);
+        var error2='';
+        if(error && error.data && error.data.error) {
+            error2=error.data.error;
+        } else {
+            error2=error;
+        }
+        alert(error2);
     },
     fmtNum:function(float,decs) {
         if(!decs) decs=2;
