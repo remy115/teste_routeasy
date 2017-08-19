@@ -2,11 +2,20 @@
 <html ng-app="reasy">
     <head>
         <title>Routeasy</title>
+        <link rel="stylesheet" href="/css/css-bundle.css">
+        <style>
+            body {margin:0;padding:0;text-align:center;}
+            #screen {display:inline-block;margin:auto;text-align:left;width:1200px;}
+            * {box-sizing:border-box;}
+        </style>
+        <link rel="stylesheet" href="/css/estilo.css">
     </head>
     <body>
-        <h1>Cadastro de clientes/entregas</h1>
-        <div>
-            <p>Soma aqui: {{2+2}}</p>
+        <div id="screen">
+            <h1>ROUTEASY</h1>
+            <h2>Cadastro de clientes/entregas</h2>
+            <form-delivery></form-delivery>
+            <delivery-map></delivery-map>
         </div>
         <script src="/js/bundle.js"></script>
         <script src="/js/index.js"></script>

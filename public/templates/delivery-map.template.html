@@ -1,0 +1,35 @@
+<div class="painel-map">
+    <div class="map" id="map-delivery"></div>
+    <div class="table-top">
+        <span>Total de Clientes: {{$ctrl.estats.totalCli}};</span>
+        <span>Peso Total: {{$ctrl.estats.totalPeso}}Kg;</span>
+        <span>Ticket Médio<sup>*</sup>: {{$ctrl.estats.ticketMedio}};</span>
+    </div>
+    <table class="table1">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Rua</th>
+                <th>Cidade</th>
+                <th>País</th>
+                <th>Peso</th>
+                <th>Lat</th>
+                <th>Lng</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in $ctrl.delivery.deliveries">
+                <td>{{item.nome}}</td>
+                <td>{{item.endereco.logradouro}}</td>
+                <td>{{item.endereco.cidade}}</td>
+                <td>{{item.endereco.pais}}</td>
+                <td>{{item.peso}}</td>
+                <td>{{item.endereco.geolocalizacao.latitude}}</td>
+                <td>{{item.endereco.geolocalizacao.longitude}}</td>
+                <td><button type="button" ng-click="$ctrl.removeDeliv(item)">x</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="subtitle"><sup>*</sup>Peso Total/Total de Clientes</p>
+</div>

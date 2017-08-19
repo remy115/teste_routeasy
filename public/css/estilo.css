@@ -1,0 +1,150 @@
+/* geral */
+* {
+    font-family:Arial, Helvetica, sans-serif;
+}
+button {cursor:pointer;}
+
+.form-btn-right {
+    width:100%;
+    position:relative;
+}
+.form-btn-right > span {
+    position:absolute;
+    top:30%;
+    right:5px;
+    z-index:100;
+    text-decoration:underline;
+    color:#404040;
+    cursor:pointer;
+}
+.form-btn-right > input.form-control2 {
+    padding-right:80px;
+}
+.frame1 {
+    border:1px solid #b0b0b0;
+    border-radius:5px;
+    background:#f0f0f0;
+}
+
+
+
+
+
+/* form delivery (esquerda) */
+.painel-form {
+    width:29.5%;
+    float:left;
+}
+.form-delivery {
+    width:95%;
+    padding:10px;
+}
+.frame1.form-delivery:last-child {
+    margin-top:10px;
+}
+.form-delivery > input.form-control2 {
+    margin-bottom:15px;
+}
+.form-delivery > input.form-control2:last-child {
+    margin-bottom:0;
+}
+
+.lat-lng {
+    margin-top:75px;
+}
+.lat-lng > input {
+    width:48%;
+    background:#e0e0e0;
+    color:#505050;
+    text-align:center;
+    padding-left:0;
+    padding-right:0;
+}
+.lat-lng > input:last-child {
+    float:right;
+}
+.form-delivery .btn-delivery {
+    width:100%;
+    border:1px solid #a0a0a0;
+    border-radius:3px;
+    padding:6px 0;
+    color:#fff;
+    font-size:1.2em;
+}
+.form-delivery .btn-delivery.btn-cad {
+    margin-top:35px;
+    background:green;
+}
+
+.form-delivery .btn-delivery.btn-reset {
+    background:red;
+}
+
+
+/* painel map (direita) */
+.painel-map {
+    width:69.5%;
+    padding:1px 20px 1px 25px;
+    position:relative;
+    float:right;
+    padding-bottom:25px;
+    border-left:1px solid #d0d0d0;
+}
+.painel-map > .map {
+    width:100%;
+    border:1px solid #b0b0b0;
+    border-radius:5px;
+    margin:25px 0;
+    height:350px;
+}
+.painel-map > .table-top {
+    color:#707070;
+}
+.painel-map > .table-top > span {
+    margin-left:10px;
+}
+.painel-map > .table-top > span:first-child {
+    margin-left:0;
+}
+.painel-map > .table1 {
+    width:100%;
+}
+.painel-map > .table1 th, .painel-map > .table1 td {
+    padding:8px 0;
+}
+ .painel-map > .table1 td {
+     padding-left:5px;
+     padding-right:5px;
+ }
+.painel-map > .table1 > thead > tr > th {
+    background:#909090;
+    color:#fff;
+    text-align:center;
+}
+.painel-map > .table1 > tbody > tr > td {
+    background:#f0f0f0;
+}
+.painel-map > .table1 > tbody > tr:nth-child(odd) > td {
+    background:#d0d0d0;
+}
+.painel-map > p.subtitle {
+    position:absolute;
+    bottom:0;
+    left:20px;
+    color:#909090;
+    margin:0;
+    font-size:0.85em;
+}
+
+
+
+/* estilos gerais */
+.form-control2 {
+    border:1px solid #b0b0b0;
+    border-radius:3px;
+    background:#fff;
+    font-size:1.1em;
+    padding:8px 2px 8px 5px;
+    width:100%;
+}
+

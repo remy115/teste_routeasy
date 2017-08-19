@@ -1,0 +1,19 @@
+<div class="painel-form">
+    <div class="frame1 form-delivery">
+        <input type="text" class="form-control2" placeholder="Nome Cliente" ng-model="$ctrl.delivery.cliente">
+        <input type="text" class="form-control2" placeholder="Peso da Entrega" ng-model="$ctrl.delivery.peso">
+        <div class="form-btn-right">
+            <span ng-click="$ctrl.getGeocode()">BUSCAR</span>
+            <input type="text" class="form-control2" placeholder="Endereço Cliente" ng-model="$ctrl.delivery.endereco">
+        </div>
+
+        <div class="lat-lng">
+            <input type="text" class="form-control2" placeholder="Latitude" ng-model="$ctrl.display.lat" disabled>
+            <input type="text" class="form-control2" placeholder="Longitude" ng-model="$ctrl.display.lng" disabled>
+        </div>
+        <button type="button" class="btn-delivery btn-cad" ng-click="$ctrl.saveDelivery()">CADASTRAR CLIENTE</button>
+    </div>
+    <div class="frame1 form-delivery">
+        <button type="button" class="btn-delivery btn-reset" >RESETAR CADASTRO</button>
+    </div>
+</div>

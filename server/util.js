@@ -1,3 +1,33 @@
+const gMaps = require('@google/maps').createClient({
+  key: 'AIzaSyDi8Cm6cxXpFaQ-OW4izj-g0N53wJb76G0',
+  Promise:Promise
+});
+
+var getGeoCode = function(address) {
+    return new Promise((res,rej)=>{
+        if(!address) {
+            return rej({error:'Endereço não fornecido!',status:400});
+        }
+        gMaps.geocode({address}).asPromise().then(function(resp) {
+            var results=resp.json.results;
+            var status=resp.json.status;
+            console.log('geocode addr: '+address,results);
+            if(status == 'OK') {
+                return res(results);
+            } else if(status == 'ZERO_RESULTS') {
+                return rej({error:'Nenhum resultado encontrado!',status:400});
+            } else {
+                console.warn(status);
+                return rej({error:'Erro Indefinido!',status:500});
+            }
+            // console.log('resp geocoding',JSON.stringify(resp));
+        }).catch((err)=>{
+            console.warn(err);
+            return rej({error:'Erro Indefinido!',status:500});
+        });
+    });
+}
+
 // converte o resultado obtido na API do geocode
 var convertGeoResult=function(geoResult) {
  var arrRet=[];
@@ -7,7 +37,7 @@ var convertGeoResult=function(geoResult) {
             var types=elem2.types;
             var longName=elem2.long_name;
             if(types.findIndex((subelem1)=>subelem1 === 'street_number') > -1) {
-                retObj.number=longName;
+                retObj.numero=longName;
             } else if(types.findIndex((subelem1)=>subelem1 === 'route') > -1) {
                 retObj.logradouro=longName;
             } else if(types.findIndex((subelem1)=>subelem1 === 'sublocality') > -1) {
@@ -36,4 +66,4 @@ var convertGeoResult=function(geoResult) {
     return arrRet;
 }
 
-module.exports={convertGeoResult}
+module.exports={convertGeoResult,getGeoCode}
